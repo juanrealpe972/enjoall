@@ -2,7 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
+
 import routerUser from "./src/routes/user.routes.js";
+import routerIncome from "./src/routes/income.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -15,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('./public'));
 
 app.use("/v1", routerUser);
+app.use('/v1', routerIncome);
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
