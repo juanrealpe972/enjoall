@@ -19,12 +19,12 @@ export const getUsers = async (req, res) => {
         let sql = `SELECT * FROM users`;
         const [result] = await pool.query(sql);
         if (result.length > 0) {
-            res.status(200).json({ message: "Los usuarios son: ", data: result });
+            return res.status(200).json({ message: "Los usuarios son: ", data: result });
         } else {
-            res.status(200).json({ message: "No hay usuarios registrados por el momento." });
+            return res.status(200).json({ message: "No hay usuarios registrados por el momento." });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 };
 
@@ -50,12 +50,12 @@ export const createUsers = async (req, res) => {
         let sql = `INSERT INTO users (pk_id_user, name_user, password_user, photo_user, phone_user, address_email_user, country_user, role_user, status_user, job_user, gender_identity_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const [result] = await pool.query(sql, [pk_id_user, name_user, bcryptPassword, photo_user, phone_user, address_email_user, country_user, 'operador', 'activo', job_user, gender_identity_user]);
         if (result.affectedRows > 0) {
-            res.status(201).json({ message: "Usuario creado con éxito." });
+            return res.status(201).json({ message: "Usuario creado con éxito." });
         } else{
-            res.status(200).json({ message: "Error al crear el usuario." });
+            return res.status(200).json({ message: "Error al crear el usuario." });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 }
 
@@ -65,12 +65,12 @@ export const getOneUser = async (req, res) => {
         let sql = `SELECT * FROM users WHERE pk_id_user = ?`;
         const [result] = await pool.query(sql, [id]);
         if (result.length > 0) {
-            res.status(200).json({ message: "El usuario es: ", data: result });
+            return res.status(200).json({ message: "El usuario es: ", data: result });
         } else {
-            res.status(200).json({ message: "No se encontró al usuario con dicha cédula."});
+            return res.status(200).json({ message: "No se encontró al usuario con dicha cédula."});
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 }
 
@@ -99,12 +99,12 @@ export const updateUser = async (req, res) => {
 
         const [result] = await pool.query(sql, params);
         if (result.affectedRows > 0) {
-            res.status(200).json({ message: "Usuario actualizado con éxito." });
+            return res.status(200).json({ message: "Usuario actualizado con éxito." });
         } else {
-            res.status(200).json({ message: "Error al actualizar al usuario." });
+            return res.status(200).json({ message: "Error al actualizar al usuario." });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 };
 
@@ -138,13 +138,13 @@ export const changePassword = async (req, res) => {
             let sql = `UPDATE users SET password_user = '${bcryptPassword}' WHERE pk_id_user = '${id}'`;
             const [result] = await pool.query(sql);
             if (result.affectedRows > 0) {
-                res.status(200).json({ message: "Se registro la nueva contraseña con éxito." });
+                return res.status(200).json({ message: "Se registro la nueva contraseña con éxito." });
             } else {
-                res.status(200).json({ message: "Error con el ID del usuario al cambiar la contraseña." });
+                return res.status(200).json({ message: "Error con el ID del usuario al cambiar la contraseña." });
             }
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 }
 
@@ -154,12 +154,12 @@ export const deleteusers = async (req, res) => {
         const sql = `DELETE FROM users WHERE pk_id_user = ?`;
         const [result] = await pool.query(sql, [id]);
         if (result.affectedRows > 0) {
-            res.status(200).json({ message: "Usuario eliminado con éxito." });
+            return res.status(200).json({ message: "Usuario eliminado con éxito." });
         } else {
-            res.status(200).json({ message: "Error con el ID al eliminar al usuario." });
+            return res.status(200).json({ message: "Error con el ID al eliminar al usuario." });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 }
 
@@ -175,11 +175,11 @@ export const changeStatus = async (req, res) => {
         const sql = `UPDATE users SET status_user = ? WHERE pk_id_user = ?`;
         const [result] = await pool.query(sql, [status_user, id]);
         if (result.affectedRows > 0) {
-            res.status(200).json({ message: `El estado del usuario cambio a ${status_user} exitosamente.` });
+            return res.status(200).json({ message: `El estado del usuario cambio a ${status_user} exitosamente.` });
         } else {
-            res.status(200).json({ message: "Error con el ID del usuario al cambiar el estado." });
+            return res.status(200).json({ message: "Error con el ID del usuario al cambiar el estado." });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error en el servidor: " + error });
+        return res.status(500).json({ message: "Error en el servidor: " + error });
     }
 }
